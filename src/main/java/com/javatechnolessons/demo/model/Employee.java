@@ -38,10 +38,10 @@ public class Employee {
     @JoinColumn(name="id_role")
     private Role role;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL) //Relación muchos a muchos
     @JoinTable(name = "employee_project", 
-             joinColumns = { @JoinColumn(name = "employee_id") }, 
-             inverseJoinColumns = { @JoinColumn(name = "project_id") })
+             joinColumns = { @JoinColumn(name = "employee_id") }, //Relación entre empleados y proyectos - emtre tablas
+             inverseJoinColumns = { @JoinColumn(name = "project_id") }) //CLAVE FORÁNEA - FK
     private List<Project> projects = new ArrayList<Project>();
 
     public Employee() {
