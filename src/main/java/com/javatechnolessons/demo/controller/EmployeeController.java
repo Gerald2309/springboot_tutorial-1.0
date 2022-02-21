@@ -26,6 +26,26 @@ public class EmployeeController {
     @Autowired
 	IEmployeeJpaRepository IEmployeeJpaRepository;
 
+    @GetMapping("/employees")
+	public ResponseEntity<List<Employee>> getAllEmployees(@RequestParam(required = false) String firstName) {
+		try {
+			List<Employee> Employees = new ArrayList<Employee>();
+
+			if (firstName == null)
+				IEmployeeJpaRepository.findAll().forEach(Employees::add);
+			else
+				IEmployeeJpaRepository.findByFirstName(firstName).forEach(Employees::add);
+
+			if (Employees.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+
+			return new ResponseEntity<>(Employees, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 	@GetMapping("/Employee/{id}")  //Buscar empleado por id
 	public ResponseEntity<Employee> getEmployeeById(@PathVariable("id") long id) {
 		Optional<Employee> EmployeeData = IEmployeeJpaRepository.findByEmployeeid(id);
