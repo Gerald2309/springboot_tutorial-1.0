@@ -55,5 +55,18 @@ public class EmployeeController {
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+
+
 	}
+
+    @DeleteMapping("/Employees/{id}")
+		public ResponseEntity<String> deleteEmployee(@PathVariable("id") long id) {
+	try {
+		    ResponseEntity.findByEmployeeid(id);
+			return new ResponseEntity<>("Tutorials DELETE!! ",HttpStatus.NO_CONTENT);
+		}   catch (Exception e) {
+		return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+	    }
+    }
+
 }
